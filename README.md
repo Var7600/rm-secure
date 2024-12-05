@@ -1,9 +1,11 @@
-# secure-rm 
+# rm-secure 
 
-   _________ ___        ________  _______  __________    _____/ /_ 
-  / ___/ __ `__ \______/ ___/ _ \/ ___/ / / / ___/ _ \  / ___/ __ \
- / /  / / / / / /_____(__  )  __/ /__/ /_/ / /  /  __/ (__  ) / / /
-/_/  /_/ /_/ /_/     /____/\___/\___/\__,_/_/   \___(_)____/_/ /_/ 
+![logo](https://github.com/user-attachments/assets/1e9c424b-1a76-487a-a131-1fe07c521fdf)
+
+                                                               
+![Screenshot 2024-12-05 183535](https://github.com/user-attachments/assets/71e9f9aa-240d-4590-82b7-95edf5da68c5)
+
+                                                                   
 
 yet Another alternative for the `Evil /bin/rm` command in Linux that provides
 options for backup, retention, and restoration of deleted file(s) or
@@ -120,13 +122,14 @@ saved for 60
 all Contributions bug/reports/issues/pull request are welcome.
 Clone the repository and set up dependencies.
 
-    1.write your features or fix or ...
+   1.write your features or fix or ...
 
-    2.Run ShellCheck to lint the script:
+   2.Run ShellCheck to lint the script:
     ```bash
         shellcheck rm-secure.sh
     ```
-    3. add yours tests and Run Bats to test
+    
+3. add yours tests and Run Bats to test
     ```
         bats tests/
     ```
