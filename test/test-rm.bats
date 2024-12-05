@@ -35,6 +35,7 @@ date_file() {
 
 @test "trash folder is created if it doesn't exist" {
 	load_rm_function
+	echo "trash dir : $sauvegarde_rm"
 	# test if folder exist
 	[ -d "$sauvegarde_rm" ]
 }
