@@ -1,7 +1,9 @@
 #!/usr/bin/env bash
 
 # trash directory
-sauvegarde_rm=~/rm_saved/
+# Use the externally provided sauvegarde_rm or default to ~/rm_saved/
+sauvegarde_rm=${sauvegarde_rm:-~/rm_saved/}
+
 # default retention period is 60 days
 days=60
 
