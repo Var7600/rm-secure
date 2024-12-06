@@ -46,7 +46,7 @@ function restore_files() {
 					# restore file
 					for file in $found
 					do
-						mv "${sauvegarde_rm}$file" ./
+						mv "${sauvegarde_rm}/$file" ./
 					done
 				fi
 				# next argument
