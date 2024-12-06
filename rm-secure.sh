@@ -162,7 +162,7 @@ function rm {
 				# format YYYY_MM_DD_XXhXXm
 				timestamp=$(date +%Y_%m_%d_%Hh%Mm)
 				# deleting/moving files
-				mv -f "$1" "${sauvegarde_rm}${timestamp}_$(basename "$1")" && echo "saved for $days days"
+				mv -f "$1" "${sauvegarde_rm}/${timestamp}_$(basename "$1")" && echo "saved for $days days"
         shift
     done
 }
