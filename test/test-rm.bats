@@ -35,13 +35,14 @@ date_file() {
 
 @test "trash folder is created if it doesn't exist" {
 	load_rm_function
-	echo "trash dir : $sauvegarde_rm"
 	# test if folder exist
 	[ -d "$sauvegarde_rm" ]
 }
 
 @test "File is moved to trash" {
 	load_rm_function
+
+	echo "trash dir : $sauvegarde_rm"
 	run echo "Hello World!" >> testfile.txt
 
 	run rm testfile.txt && snap=$(date_file)
