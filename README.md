@@ -11,6 +11,8 @@ yet Another alternative for the `Evil /bin/rm` command in Linux that provides
 options for backup, retention, and restoration of deleted file(s) or
 directory/ies.
 
+[![CI - ShellCheck and Bats](https://github.com/Var7600/rm-secure/actions/workflows/ci.yml/badge.svg)](https://github.com/Var7600/rm-secure/actions/workflows/ci.yml)
+
 ## Installation
 
 1.Clone the Repository
