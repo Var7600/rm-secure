@@ -73,8 +73,8 @@ date_file() {
 @test "File is restored from the trash" {
 	load_rm_function
 	local testfile="2024_11_28_02h26m_testfile.txt"
-	touch "${sauvegarde_rm}$testfile"
-	[ -f "${sauvegarde_rm}$testfile" ]
+	touch "${sauvegarde_rm}/$testfile"
+	[ -f "${sauvegarde_rm}/$testfile" ]
 
 	# restore file
 	run rm -s "$testfile" 
@@ -101,8 +101,8 @@ date_file() {
 	local two_testfile="2011_11_28_07h05m_testfile2.txt"
 
 	# put files in trash directory
-	run touch "${sauvegarde_rm}${one_testfile}"
-	run touch "${sauvegarde_rm}${two_testfile}"
+	run touch "${sauvegarde_rm}/${one_testfile}"
+	run touch "${sauvegarde_rm}/${two_testfile}"
 
 	# restore file(s)
 	run rm -s testfile1.txt testfile2.txt
@@ -110,8 +110,8 @@ date_file() {
 	
 
 	# check if the files are moved from the trash
-	[ ! -e "${sauvegarde_rm}${one_testfile}" ]  
-	[ ! -e "${sauvegarde_rm}${two_testfile}" ]
+	[ ! -e "${sauvegarde_rm}/${one_testfile}" ]  
+	[ ! -e "${sauvegarde_rm}/${two_testfile}" ]
 
 	#  check files are restored
 	[ -e "$one_testfile" ]  
