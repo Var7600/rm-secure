@@ -121,7 +121,7 @@ saved for 60
 - This script overrides `rm` behavior and moves files to a temporary location instead of deleting them permanently.
 
 ## TO DO
-- [ ] make the `-d` or `--days` option work(find a way to delete file(s) after the retention period)
+- [ ] make a `-d` or `--days` option to specify the number of days to save the deleted file.
 
 ## Contributions
 all Contributions bug/reports/issues/pull request are welcome.
