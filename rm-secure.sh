@@ -7,6 +7,20 @@ sauvegarde_rm=${sauvegarde_rm:-~/rm_saved}
 # default retention period is 60 days
 days=60
 
+# Usages
+function usage() {
+
+	echo "rm_secure: A safer alternative to GNU rm"
+	echo "Usage: rm [OPTIONS] FILE..."
+	echo "Options:"
+	echo "  -d <days>      Set retention period in days (default: $days)"
+	echo "  -e, --empty    Empty the trash folder(Definitively)"
+	echo "  -l, --list     List files in the trash folder"
+	echo "  -s, --restore  Restore files or directory from trash"
+	echo "  -r/-R, --delete delete a directory "
+	echo "  -v, --verbose  Verbose output"
+	echo "  --help         Show this help message"
+}
 
 # Function to ensure the trash directory exists
 function create_trash_dir() {
@@ -55,6 +69,12 @@ function restore_files() {
 
 }
 
+# find and cleanup file(s)
+function cleanup_old_files() {
+	# Function to delete files after retention period
+    find "$sauvegarde_rm" -type f -mtime +"$days" -delete 
+}
+
 function rm {
     local opt_force=0
     local opt_interactive=0
@@ -68,9 +88,9 @@ function rm {
 
     OPTIND=0
     # process command line argument
-    while getopts ":dfirRvels-:" opt ; do
+    while getopts ':d:firRvels-:' opt ; do
         case $opt in
-        d) override_days=$OPTARG ;; 
+        d) override_days="$OPTARG" ;; 
         f) opt_force=1 ;;
         i) opt_interactive=1 ;;
         r | R ) opt_recursive=1 ;;
@@ -78,23 +98,19 @@ function rm {
         l) opt_list=1 ;;
         s) opt_restore=1 ;;
         v) opt_verbose=1 ;;
+				:)
+					echo "option requires an argument"
+					return 1
+					;;
         -) case $OPTARG in
-                directory ) ;;
+					days ) override_days="$3"; OPTIND=$(( OPTIND + 1 ))
+								;;
                 force) opt_force=1 ;;
                 interactive) opt_interactive=1 ;;
                 recursive) opt_recursive=1 ;;
                 verbose) opt_verbose=1 ;;
                 help) 
-										echo "rm_secure: A safer alternative to GNU rm"
-										echo "Usage: rm [OPTIONS] FILE..."
-										echo "Options:"
-										echo "  -d <days>      Set retention period in days (default: $days)"
-										echo "  -e, --empty    Empty the trash folder(Definitively)"
-										echo "  -l, --list     List files in the trash folder"
-										echo "  -s, --restore  Restore files or directory from trash"
-										echo "  -r/-R, --delete delete a directory "
-										echo "  -v, --verbose  Verbose output"
-										echo "  --help         Show this help message"
+										usage
                     return 0 ;; # exit code for rm
                 version ) 
 										echo "rm_secure version 1.3"
@@ -132,9 +148,9 @@ function rm {
 		else
 			[ $opt_restore -ne 0 ] && { restore_files "$@";  return 0; }
 		fi
- 
-		# delete files after retention period
-		find "$sauvegarde_rm"  -mtime +"$days" -exec /bin/rm -rf {} \;
+	  # Cleanup old files
+    cleanup_old_files
+
     # delete files
     while [ -n "$1" ]; do
         # delete interactive mode 
