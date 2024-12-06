@@ -120,6 +120,9 @@ saved for 60
 - Ensure that the `sauvegarde_rm` directory is accessible and writable (default is `~/rm-saved/`).
 - This script overrides `rm` behavior and moves files to a temporary location instead of deleting them permanently.
 
+## TO DO
+- [ ] make the `-d` or `--days` option work(find a way to delete file(s) after the retention period)
+
 ## Contributions
 all Contributions bug/reports/issues/pull request are welcome.
 Clone the repository and set up dependencies.
