@@ -4,8 +4,6 @@
 # Use the externally provided sauvegarde_rm or default to ~/rm_saved/
 sauvegarde_rm=${sauvegarde_rm:-~/rm_saved}
 
-# default retention period is 60 days
-days=60
 
 # Usages
 function usage() {
@@ -13,7 +11,7 @@ function usage() {
 	echo "rm_secure: A safer alternative to GNU rm"
 	echo "Usage: rm [OPTIONS] FILE..."
 	echo "Options:"
-	echo "  -d <days>      Set retention period in days (default: $days)"
+	# echo "  -d <days>      Set retention period in days (default: $days)"
 	echo "  -e, --empty    Empty the trash folder(Definitively)"
 	echo "  -l, --list     List files in the trash folder"
 	echo "  -s, --restore  Restore files or directory from trash"
@@ -72,7 +70,7 @@ function restore_files() {
 # find and cleanup file(s)
 function cleanup_old_files() {
 	# Function to delete files after retention period
-    find "$sauvegarde_rm" -type f -mtime +"$days" -delete 
+    find "$sauvegarde_rm" -type f -mtime +"$1" -delete 
 }
 
 function rm {
@@ -83,14 +81,17 @@ function rm {
     local opt_empty=0
     local opt_list=0
     local opt_restore=0
-		local override_days=0
     local opt
+
+		# default retention period is 60 days
+		local days=60
 
     OPTIND=0
     # process command line argument
     while getopts ':d:firRvels-:' opt ; do
         case $opt in
-        d) override_days="$OPTARG" ;; 
+					# TO DO -d option to specify the number of days to save the file
+       # d) override_days="$OPTARG" ;; 
         f) opt_force=1 ;;
         i) opt_interactive=1 ;;
         r | R ) opt_recursive=1 ;;
@@ -103,8 +104,9 @@ function rm {
 					return 1
 					;;
         -) case $OPTARG in
-					days ) override_days="$3"; OPTIND=$(( OPTIND + 1 ))
-								;;
+					# TO DO --days  to specify the number of days to save the file
+					# days ) override_days="$3"; OPTIND=$(( OPTIND + 1 )) ;;
+								
                 force) opt_force=1 ;;
                 interactive) opt_interactive=1 ;;
                 recursive) opt_recursive=1 ;;
@@ -129,8 +131,6 @@ function rm {
 
     shift $((OPTIND - 1)) # shifts the arguments by removing the first n
 		
-		# Adjust retention period
-		[ "$override_days" -gt 0 ] && days="$override_days"
 
     # Function to create the backup directory
 		create_trash_dir
@@ -149,7 +149,7 @@ function rm {
 			[ $opt_restore -ne 0 ] && { restore_files "$@";  return 0; }
 		fi
 	  # Cleanup old files
-    cleanup_old_files
+    cleanup_old_files "$days"
 
     # delete files
     while [ -n "$1" ]; do
